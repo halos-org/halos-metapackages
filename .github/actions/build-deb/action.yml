@@ -14,16 +14,14 @@ runs:
     - name: Build halos package
       shell: bash
       run: |
-        cd halos
-        docker compose -f ../docker/docker-compose.debtools.yml run --rm debtools \
-          bash -c "dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./ 2>/dev/null || true"
+        docker compose -f docker/docker-compose.debtools.yml run --rm debtools \
+          bash -c "cd halos && dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./"
 
     - name: Build halos-marine package
       shell: bash
       run: |
-        cd halos-marine
-        docker compose -f ../docker/docker-compose.debtools.yml run --rm debtools \
-          bash -c "dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./ 2>/dev/null || true"
+        docker compose -f docker/docker-compose.debtools.yml run --rm debtools \
+          bash -c "cd halos-marine && dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./"
 
     - name: Move packages to root
       shell: bash
