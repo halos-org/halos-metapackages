@@ -1,0 +1,150 @@
+#!/usr/bin/env bash
+#
+# usage: ./run command [argument ...]
+#
+# Commands for halos-metapackages development.
+#
+
+set -o nounset
+set -o pipefail
+set -o errexit
+
+# Change the current directory to the project root.
+PROJECT_ROOT=${0%/*}
+if [[ $0 != $PROJECT_ROOT && $PROJECT_ROOT != "" ]]; then
+  cd "$PROJECT_ROOT"
+fi
+readonly PROJECT_ROOT=$(pwd)
+
+################################################################################
+# Helper Functions
+
+function debtools {
+  #@ Run command in debtools container (Debian packaging)
+  docker compose -f docker/docker-compose.debtools.yml run --rm debtools "$@"
+}
+
+################################################################################
+# Debian Package Building Commands
+
+function build-halos {
+  #@ Build halos metapackage
+  #@ Category: Build
+  echo "📦 Building halos package..."
+  debtools bash -c "cd halos && dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./ 2>/dev/null || true"
+  echo "✅ halos package built"
+  ls -lh halos/*.deb 2>/dev/null || true
+}
+
+function build-halos-marine {
+  #@ Build halos-marine metapackage
+  #@ Category: Build
+  echo "📦 Building halos-marine package..."
+  debtools bash -c "cd halos-marine && dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./ 2>/dev/null || true"
+  echo "✅ halos-marine package built"
+  ls -lh halos-marine/*.deb 2>/dev/null || true
+}
+
+function build-all {
+  #@ Build both metapackages
+  #@ Category: Build
+  build-halos
+  build-halos-marine
+  echo ""
+  echo "📦 All packages built:"
+  ls -lh halos/*.deb halos-marine/*.deb 2>/dev/null || true
+}
+
+function lint {
+  #@ Check packages with lintian
+  #@ Category: Quality
+  echo "🔍 Running lintian on halos..."
+  debtools lintian halos/*.deb 2>/dev/null || true
+  echo ""
+  echo "🔍 Running lintian on halos-marine..."
+  debtools lintian halos-marine/*.deb 2>/dev/null || true
+}
+
+################################################################################
+# Docker Management Commands
+
+function build-debtools {
+  #@ Build Debian packaging Docker image
+  #@ Category: Docker
+  echo "🐳 Building Debian packaging Docker image..."
+  docker compose -f docker/docker-compose.debtools.yml build debtools
+  echo "✅ Docker image built successfully"
+}
+
+function clean-debtools {
+  #@ Remove Debian packaging Docker containers and images
+  #@ Category: Docker
+  echo "🧹 Cleaning Debian packaging Docker containers and images..."
+  docker compose -f docker/docker-compose.debtools.yml down --rmi all --volumes
+  echo "✅ Docker cleanup complete"
+}
+
+################################################################################
+# Utility Commands
+
+function clean {
+  #@ Clean build artifacts
+  #@ Category: Utility
+  echo "🧹 Cleaning build artifacts..."
+  rm -f halos/*.deb halos/*.buildinfo halos/*.changes 2>/dev/null || true
+  rm -f halos-marine/*.deb halos-marine/*.buildinfo halos-marine/*.changes 2>/dev/null || true
+  echo "✅ Cleanup complete"
+}
+
+################################################################################
+# Help System
+
+function help {
+  #@ Show this help message
+  #@ Category: Core
+  echo "HaLOS Metapackages - Development Commands"
+  echo "=========================================="
+  echo ""
+  echo "Available commands:"
+  echo ""
+
+  # Extract function definitions and their help comments
+  awk '/^function / {
+    fname = $2
+    sub(/[({].*/, "", fname)
+    getline
+    if ($0 ~ /#@/) {
+      desc = $0
+      sub(/.*#@ /, "", desc)
+      sub(/ *$/, "", desc)
+      getline
+      if ($0 ~ /#@ Category:/) {
+        cat = $0
+        sub(/.*Category: /, "", cat)
+        sub(/ *$/, "", cat)
+        if (!seen[cat]++) categories[++cat_count] = cat
+        commands[cat, ++cmd_count[cat]] = fname
+        descriptions[cat, cmd_count[cat]] = desc
+      }
+    }
+  }
+  END {
+    for (i = 1; i <= cat_count; i++) {
+      cat = categories[i]
+      print "\n" cat ":"
+      for (j = 1; j <= cmd_count[cat]; j++) {
+        printf "  %-25s %s\n", commands[cat, j], descriptions[cat, j]
+      }
+    }
+  }' "$0"
+
+  echo ""
+  echo "Usage: ./run <command> [arguments...]"
+  echo ""
+}
+
+################################################################################
+# Commands end.
+
+TIMEFORMAT=$'\nTask completed in %3lR'
+time "${@:-help}"

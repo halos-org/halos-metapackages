@@ -1,0 +1,30 @@
+Source: halos
+Section: metapackages
+Priority: optional
+Maintainer: Hat Labs <info@hatlabs.fi>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Homepage: https://github.com/hatlabs/halos-metapackages
+Rules-Requires-Root: no
+
+Package: halos
+Architecture: all
+Depends: ${misc:Depends},
+         cockpit,
+         cockpit-networkmanager,
+         cockpit-storaged,
+         cockpit-apt,
+         cockpit-branding-halos
+Description: Base system metapackage for HaLOS
+ This metapackage installs the base HaLOS system, providing web-based
+ Raspberry Pi management through Cockpit.
+ .
+ The HaLOS base system includes:
+  * Cockpit web interface for system management
+  * Network configuration through cockpit-networkmanager
+  * Storage management through cockpit-storaged
+  * Package management through cockpit-apt
+  * Custom HaLOS branding
+ .
+ HaLOS is a Debian-based operating system designed for easy management
+ of Raspberry Pi systems through a web interface.

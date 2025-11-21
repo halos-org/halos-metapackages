@@ -1,0 +1,26 @@
+Source: halos-marine
+Section: metapackages
+Priority: optional
+Maintainer: Hat Labs <info@hatlabs.fi>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Homepage: https://github.com/hatlabs/halos-metapackages
+Rules-Requires-Root: no
+
+Package: halos-marine
+Architecture: all
+Depends: ${misc:Depends},
+         halos (>= ${binary:Version}),
+         marine-container-store,
+         signalk-server-container
+Description: HaLOS marine system metapackage
+ This metapackage extends the base HaLOS system with marine navigation
+ and monitoring software.
+ .
+ The HaLOS marine system adds:
+  * Marine container store for browsing marine applications
+  * Signal K server for marine data collection and distribution
+  * Pre-configured marine software stack
+ .
+ This package depends on the halos base metapackage and adds marine-specific
+ components for boat and vessel management.
