@@ -31,9 +31,13 @@ fi
 case "$RELEASE_TYPE" in
   prerelease)
     cat > release_notes.md <<EOF
-## Cockpit APT v${TAG_VERSION} (Pre-release)
+## HaLOS Metapackages ${TAG_VERSION} (Pre-release)
 
-⚠️ **This is a pre-release build from the main branch. Use for testing only.**
+> **This is a pre-release build from the main branch. Use for testing only.**
+
+**Packages:**
+- \`halos\` - Base HaLOS system metapackage
+- \`halos-marine\` - Marine variant metapackage
 
 **Build Information:**
 - Commit: ${SHORT_SHA} (\`${GITHUB_SHA}\`)
@@ -45,8 +49,6 @@ ${CHANGELOG}
 
 ### Installation
 
-To install this pre-release:
-
 \`\`\`bash
 # Add Hat Labs repository (if not already added)
 curl -fsSL https://apt.hatlabs.fi/hat-labs-apt-key.asc | sudo gpg --dearmor -o /usr/share/keyrings/hatlabs-apt-key.gpg
@@ -56,7 +58,8 @@ echo "deb [signed-by=/usr/share/keyrings/hatlabs-apt-key.gpg] https://apt.hatlab
 
 # Update and install
 sudo apt update
-sudo apt install cockpit-apt
+sudo apt install halos        # Base system
+sudo apt install halos-marine # Marine variant
 \`\`\`
 
 EOF
@@ -64,65 +67,53 @@ EOF
 
   draft)
     cat > release_notes.md <<EOF
-## Cockpit APT v${VERSION}
+## HaLOS Metapackages v${VERSION}
 
-Modern Cockpit interface for APT package management on Debian, inspired by Raspberry Pi's Add/Remove Software.
+Debian metapackages for the HaLOS (Hat Labs Operating System) distribution.
+
+**Packages:**
+- \`halos\` - Base HaLOS system (Cockpit + tools)
+- \`halos-marine\` - Marine variant (halos + marine packages)
 
 ### Changes
 
 ${CHANGELOG}
 
-### Features
-
-- Browse packages by Debian sections
-- Search for packages across all sections
-- View detailed package information
-- Install and remove packages with progress tracking
-- Dark mode support
-- Accessible interface with keyboard navigation
-
 ### Installation
 
-This is the source code release. For Debian packages, see [apt.hatlabs.fi](https://github.com/hatlabs/apt.hatlabs.fi).
+Available from [apt.hatlabs.fi](https://github.com/hatlabs/apt.hatlabs.fi):
 
-### Development
-
-For development setup and build commands, see:
-- [README.md](https://github.com/hatlabs/cockpit-apt/blob/main/README.md) - Installation and usage
-- [CLAUDE.md](https://github.com/hatlabs/cockpit-apt/blob/main/CLAUDE.md) - Development guide
-- \`./run help\` - Available build and development commands
+\`\`\`bash
+sudo apt update
+sudo apt install halos        # Base system
+sudo apt install halos-marine # Marine variant
+\`\`\`
 EOF
     ;;
 
   stable)
     cat > release_notes.md <<EOF
-## Cockpit APT v${VERSION}
+## HaLOS Metapackages v${VERSION}
 
-Modern Cockpit interface for APT package management on Debian, inspired by Raspberry Pi's Add/Remove Software.
+Debian metapackages for the HaLOS (Hat Labs Operating System) distribution.
+
+**Packages:**
+- \`halos\` - Base HaLOS system (Cockpit + tools)
+- \`halos-marine\` - Marine variant (halos + marine packages)
 
 ### Changes
 
 ${CHANGELOG}
 
-### Features
-
-- Browse packages by Debian sections
-- Search for packages across all sections
-- View detailed package information
-- Install and remove packages with progress tracking
-- Dark mode support
-- Accessible interface with keyboard navigation
-
 ### Installation
 
-This is the source code release. For Debian packages, see [apt.hatlabs.fi](https://github.com/hatlabs/apt.hatlabs.fi).
+Available from [apt.hatlabs.fi](https://github.com/hatlabs/apt.hatlabs.fi):
 
-### Development
-
-For development setup and build commands, see:
-- [README.md](https://github.com/hatlabs/cockpit-apt/blob/main/README.md) - Installation and usage
-- [CLAUDE.md](https://github.com/hatlabs/cockpit-apt/blob/main/CLAUDE.md) - Development guide
-- \`./run help\` - Available build and development commands
+\`\`\`bash
+sudo apt update
+sudo apt install halos        # Base system
+sudo apt install halos-marine # Marine variant
+\`\`\`
 EOF
     ;;
 
