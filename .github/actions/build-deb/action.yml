@@ -3,29 +3,30 @@ description: 'Build both halos and halos-marine metapackages'
 runs:
   using: 'composite'
   steps:
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
-
-    - name: Build debtools image
+    - name: Install build dependencies
       shell: bash
       run: |
-        docker compose -f docker/docker-compose.debtools.yml build debtools
+        sudo apt-get update
+        sudo apt-get install -y dpkg-dev debhelper build-essential
 
     - name: Build halos package
       shell: bash
       run: |
-        docker compose -f docker/docker-compose.debtools.yml run --rm debtools \
-          bash -c "cd halos && dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./"
+        cd halos
+        dpkg-buildpackage -b -uc -us
+        mv ../*.deb ../halos/ 2>/dev/null || true
 
     - name: Build halos-marine package
       shell: bash
       run: |
-        docker compose -f docker/docker-compose.debtools.yml run --rm debtools \
-          bash -c "cd halos-marine && dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./"
+        cd halos-marine
+        dpkg-buildpackage -b -uc -us
+        mv ../*.deb ../halos-marine/ 2>/dev/null || true
 
     - name: Move packages to root
       shell: bash
       run: |
         mv halos/*.deb ./ 2>/dev/null || true
         mv halos-marine/*.deb ./ 2>/dev/null || true
+        echo "Built packages:"
         ls -lh *.deb
