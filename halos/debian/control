@@ -14,7 +14,11 @@ Depends: ${misc:Depends},
          cockpit-networkmanager,
          cockpit-storaged,
          cockpit-apt,
-         cockpit-branding-halos
+         cockpit-dockermanager,
+         cockpit-branding-halos,
+         docker.io,
+         docker-compose,
+         docker-cli
 Description: Base system metapackage for HaLOS
  This metapackage installs the base HaLOS system, providing web-based
  Raspberry Pi management through Cockpit.
