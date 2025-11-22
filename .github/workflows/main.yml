@@ -10,6 +10,8 @@ jobs:
     with:
       package-name: halos
       package-description: 'HaLOS metapackages (halos, halos-marine)'
+      apt-distro: trixie
+      apt-component: main
       skip-tests: true
     secrets:
       APT_REPO_PAT: ${{ secrets.APT_REPO_PAT }}
