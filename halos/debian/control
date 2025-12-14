@@ -18,7 +18,8 @@ Depends: ${misc:Depends},
          cockpit-branding-halos,
          docker.io,
          docker-compose,
-         docker-cli
+         docker-cli,
+         halos-homarr-container
 Description: Base system metapackage for HaLOS
  This metapackage installs the base HaLOS system, providing web-based
  Raspberry Pi management through Cockpit.
@@ -28,6 +29,7 @@ Description: Base system metapackage for HaLOS
   * Network configuration through cockpit-networkmanager
   * Storage management through cockpit-storaged
   * Package management through cockpit-apt
+  * Homarr dashboard for container app access
   * Custom HaLOS branding
  .
  HaLOS is a Debian-based operating system designed for easy management

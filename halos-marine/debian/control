@@ -12,7 +12,7 @@ Architecture: all
 Depends: ${misc:Depends},
          halos (>= ${binary:Version}),
          marine-container-store,
-         signalk-server-container
+         marine-signalk-server-container
 Description: HaLOS marine system metapackage
  This metapackage extends the base HaLOS system with marine navigation
  and monitoring software.
