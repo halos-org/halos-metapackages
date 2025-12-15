@@ -1,3 +1,10 @@
+halos (0.2.0-1) unstable; urgency=medium
+
+  * Add homarr-container-adapter dependency for automatic first-boot setup
+  * Add homarr-branding-halos dependency for dashboard branding
+
+ -- Hat Labs <info@hatlabs.fi>  Sun, 15 Dec 2025 13:10:00 +0200
+
 halos (0.1.0-1) unstable; urgency=medium
 
   * Initial release.
