@@ -10,7 +10,7 @@ Base HaLOS system metapackage that installs:
 - cockpit-networkmanager
 - cockpit-storaged
 - cockpit-apt package manager
-- cockpit-branding-halos
+- halos-cockpit-branding
 
 ### `halos-marine`
 Marine system metapackage that extends `halos` with:
