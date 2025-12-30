@@ -56,13 +56,24 @@ function build-all {
 }
 
 function lint {
-  #@ Check packages with lintian
+  #@ Check packages with lintian (same flags as CI)
   #@ Category: Quality
+  local failed=0
   echo "🔍 Running lintian on halos..."
-  debtools lintian halos/*.deb 2>/dev/null || true
+  if ! debtools lintian --info --display-info --fail-on error,warning halos/*.deb; then
+    failed=1
+  fi
   echo ""
   echo "🔍 Running lintian on halos-marine..."
-  debtools lintian halos-marine/*.deb 2>/dev/null || true
+  if ! debtools lintian --info --display-info --fail-on error,warning halos-marine/*.deb; then
+    failed=1
+  fi
+  echo ""
+  if [ $failed -eq 1 ]; then
+    echo "❌ Lintian found issues. See above for details."
+    return 1
+  fi
+  echo "✅ Lintian checks passed"
 }
 
 ################################################################################
