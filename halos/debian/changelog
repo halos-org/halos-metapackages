@@ -1,3 +1,9 @@
+halos (0.2.3-1) unstable; urgency=medium
+
+  * Add cockpit-networkmanager-halos dependency for WiFi hotspot support
+
+ -- Hat Labs <info@hatlabs.fi>  Fri, 02 Jan 2026 12:00:00 +0200
+
 halos (0.2.2-1) unstable; urgency=medium
 
   * Add cockpit-container-apps dependency for container app management
