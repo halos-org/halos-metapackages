@@ -15,6 +15,7 @@ Depends: ${misc:Depends},
          cockpit-storaged,
          cockpit-apt,
          cockpit-dockermanager,
+         cockpit-container-apps,
          halos-cockpit-config,
          docker.io,
          docker-compose,
@@ -32,6 +33,7 @@ Description: Base system metapackage for HaLOS
   * Network configuration through cockpit-networkmanager
   * Storage management through cockpit-storaged
   * Package management through cockpit-apt
+  * Container app management through cockpit-container-apps
   * Homarr dashboard for container app access
   * Automatic container discovery and dashboard integration
   * Custom HaLOS branding
