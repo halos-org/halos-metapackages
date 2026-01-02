@@ -22,9 +22,8 @@ Depends: ${misc:Depends},
          docker.io,
          docker-compose,
          docker-cli,
-         halos-homarr-container,
+         halos-core-containers,
          homarr-container-adapter,
-         halos-homarr-branding,
          halos-mdns-publisher
 Description: Base system metapackage for HaLOS
  This metapackage installs the base HaLOS system, providing web-based
