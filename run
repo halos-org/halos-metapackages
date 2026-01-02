@@ -96,6 +96,115 @@ function clean-debtools {
 }
 
 ################################################################################
+# Version Management Commands
+
+function bumpversion {
+  #@ Bump version using dch (patch|minor|major) [message]
+  #@ Category: Version
+  local BUMP_TYPE="${1:-}"
+  local MESSAGE="${2:-Version bump}"
+
+  if [[ -z "$BUMP_TYPE" ]]; then
+    echo "Error: version bump type required"
+    echo "Usage: ./run bumpversion [patch|minor|major] [message]"
+    exit 1
+  fi
+
+  if [[ ! "$BUMP_TYPE" =~ ^(patch|minor|major)$ ]]; then
+    echo "Error: invalid bump type '$BUMP_TYPE'"
+    echo "Usage: ./run bumpversion [patch|minor|major] [message]"
+    exit 1
+  fi
+
+  # Check for clean working directory
+  if ! git diff --quiet || ! git diff --cached --quiet; then
+    echo "Error: working directory not clean"
+    echo "Commit or stash changes before bumping version"
+    exit 1
+  fi
+
+  # Read current version
+  local CURRENT_VERSION
+  CURRENT_VERSION=$(cat VERSION)
+  echo "Current version: $CURRENT_VERSION"
+
+  # Calculate new version
+  local IFS='.'
+  read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
+  local MAJOR="${VERSION_PARTS[0]}"
+  local MINOR="${VERSION_PARTS[1]}"
+  local PATCH="${VERSION_PARTS[2]}"
+
+  case "$BUMP_TYPE" in
+    major)
+      MAJOR=$((MAJOR + 1))
+      MINOR=0
+      PATCH=0
+      ;;
+    minor)
+      MINOR=$((MINOR + 1))
+      PATCH=0
+      ;;
+    patch)
+      PATCH=$((PATCH + 1))
+      ;;
+  esac
+
+  local NEW_VERSION="${MAJOR}.${MINOR}.${PATCH}"
+  echo "New version: $NEW_VERSION"
+
+  # Update VERSION file
+  echo "$NEW_VERSION" > VERSION
+
+  # Update both changelogs using dch in debtools container
+  echo "Updating changelogs using dch..."
+
+  debtools bash -c "
+    export DEBEMAIL='info@hatlabs.fi'
+    export DEBFULLNAME='Hat Labs'
+
+    cd halos && dch --newversion '${NEW_VERSION}-1' --distribution unstable '$MESSAGE'
+    cd ../halos-marine && dch --newversion '${NEW_VERSION}-1' --distribution unstable '$MESSAGE'
+  "
+
+  echo "Committing changes..."
+
+  # Commit the changes (bypass changelog check since we used dch)
+  git add VERSION halos/debian/changelog halos-marine/debian/changelog
+  SKIP_CHANGELOG_CHECK=1 git commit -m "chore: bump version to ${NEW_VERSION}
+
+${MESSAGE}"
+
+  echo ""
+  echo "✅ Version bumped to $NEW_VERSION"
+  echo "Push with: git push"
+}
+
+################################################################################
+# Development Commands
+
+function install-hooks {
+  #@ Install pre-commit hooks using lefthook
+  #@ Category: Development
+  if ! command -v lefthook &> /dev/null; then
+    echo "Error: lefthook not found. Install with: brew install lefthook"
+    exit 1
+  fi
+  lefthook install
+  echo "✅ Pre-commit hooks installed"
+}
+
+function run-hooks {
+  #@ Run pre-commit hooks manually
+  #@ Category: Development
+  if ! command -v lefthook &> /dev/null; then
+    echo "Error: lefthook not found. Install with: brew install lefthook"
+    exit 1
+  fi
+  lefthook run pre-commit
+}
+
+################################################################################
 # Utility Commands
 
 function clean {
