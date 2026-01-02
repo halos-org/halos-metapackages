@@ -22,7 +22,7 @@ Depends: ${misc:Depends},
          docker.io,
          docker-compose,
          docker-cli,
-         halos-homarr-container,
+         halos-core-containers,
          homarr-container-adapter,
          halos-homarr-branding,
          halos-mdns-publisher
