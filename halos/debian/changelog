@@ -1,3 +1,12 @@
+halos (0.2.5-1) unstable; urgency=medium
+
+  * Replace halos-homarr-container with halos-core-containers
+  * halos-core-containers is a unified package containing Traefik,
+    Authelia, and Homarr (previously separate packages)
+  * Remove explicit halos-homarr-branding dependency (now transitive)
+
+ -- Hat Labs <info@hatlabs.fi>  Thu, 02 Jan 2026 21:30:00 +0200
+
 halos (0.2.4-1) unstable; urgency=medium
 
   * Add cockpit-authelia-users dependency for Authelia user management
