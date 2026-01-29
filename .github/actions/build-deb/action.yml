@@ -9,6 +9,22 @@ runs:
         sudo apt-get update
         sudo apt-get install -y dpkg-dev debhelper build-essential
 
+    - name: Generate changelogs
+      shell: bash
+      run: |
+        VERSION=$(cat VERSION)
+        DATE=$(date -R)
+        for pkg in halos halos-marine; do
+          cat > "${pkg}/debian/changelog" <<EOF
+        ${pkg} (${VERSION}-1) unstable; urgency=medium
+
+          * CI build
+
+         -- Hat Labs <info@hatlabs.fi>  ${DATE}
+        EOF
+          sed -i 's/^        //' "${pkg}/debian/changelog"
+        done
+
     - name: Build halos package
       shell: bash
       run: |
