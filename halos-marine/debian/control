@@ -11,6 +11,7 @@ Package: halos-marine
 Architecture: all
 Depends: ${misc:Depends},
          halos (>= ${binary:Version}),
+         gpsd,
          marine-container-store,
          marine-signalk-server-container
 Description: HaLOS marine system metapackage
