@@ -64,3 +64,5 @@ git push
 ```
 
 Requires `bump2version` installed (`pip install bump2version`).
+
+**CI Enforcement**: PRs that change package-affecting files must include a VERSION bump or CI will fail. Changes to docs, tests, CI config, and dev tooling are automatically excluded.
