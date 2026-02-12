@@ -6,10 +6,6 @@
 *.tar.gz
 *.tar.xz
 
-# Generated changelogs (created by local builds and CI)
-halos/debian/changelog
-halos-marine/debian/changelog
-
 # Debian build directories
 halos/debian/.debhelper/
 halos/debian/halos/

@@ -1,0 +1,19 @@
+halos-marine (0.2.9-1) unstable; urgency=medium
+
+  * Track debian/changelog in git instead of generating dynamically
+  * Add gpsd dependency for GPS support
+
+ -- Hat Labs <info@hatlabs.fi>  Thu, 12 Feb 2026 21:00:00 +0200
+
+halos-marine (0.2.0-1) unstable; urgency=medium
+
+  * Add halos-core-containers dependency
+  * Update marine container dependencies
+
+ -- Hat Labs <info@hatlabs.fi>  Thu, 29 Jan 2026 12:00:00 +0200
+
+halos-marine (0.1.0-1) unstable; urgency=medium
+
+  * Initial release of halos-marine metapackage
+
+ -- Hat Labs <info@hatlabs.fi>  Sat, 22 Nov 2025 12:00:00 +0200
