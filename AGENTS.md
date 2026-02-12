@@ -45,7 +45,7 @@ See `halos-distro/docs/DEVELOPMENT_WORKFLOW.md` for detailed workflows.
 ## Version Management
 
 Version bumping uses `bump2version` (consistent with other HaLOS repos).
-`debian/changelog` files are generated dynamically by CI, not stored in the repo.
+`debian/changelog` files are tracked in git. CI overwrites them during release builds with the correct revision.
 
 ### Bumping Versions
 

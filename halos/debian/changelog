@@ -1,0 +1,24 @@
+halos (0.2.9-1) unstable; urgency=medium
+
+  * Track debian/changelog in git instead of generating dynamically
+  * Correct Wi-Fi capitalization in package description
+  * Add gpsd dependency for GPS support
+
+ -- Hat Labs <info@hatlabs.fi>  Thu, 12 Feb 2026 21:00:00 +0200
+
+halos (0.2.0-1) unstable; urgency=medium
+
+  * Add cockpit-container-apps dependency
+  * Add halos-mdns-publisher dependency
+  * Add cockpit-networkmanager-halos dependency
+  * Add cockpit-authelia-users dependency
+  * Add halos-core-containers dependency
+  * Rename dependency to halos-cockpit-config
+
+ -- Hat Labs <info@hatlabs.fi>  Thu, 29 Jan 2026 12:00:00 +0200
+
+halos (0.1.0-1) unstable; urgency=medium
+
+  * Initial release of halos metapackage
+
+ -- Hat Labs <info@hatlabs.fi>  Sat, 22 Nov 2025 12:00:00 +0200

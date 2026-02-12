@@ -24,23 +24,6 @@ function debtools {
   docker compose -f docker/docker-compose.debtools.yml run --rm debtools "$@"
 }
 
-function generate-local-changelog {
-  # Generate a minimal debian/changelog for local builds.
-  # CI generates the real changelog via .github/scripts/generate-changelog.sh.
-  local PACKAGE_NAME="$1"
-  local PACKAGE_DIR="$2"
-  local VERSION
-  VERSION=$(cat VERSION)
-
-  cat > "${PACKAGE_DIR}/debian/changelog" <<EOF
-${PACKAGE_NAME} (${VERSION}-1) unstable; urgency=medium
-
-  * Local development build
-
- -- Hat Labs <info@hatlabs.fi>  $(LC_ALL=C date -R 2>/dev/null || LC_ALL=C date "+%a, %d %b %Y %H:%M:%S %z")
-EOF
-}
-
 ################################################################################
 # Debian Package Building Commands
 
@@ -48,7 +31,6 @@ function build-halos {
   #@ Build halos metapackage
   #@ Category: Build
   echo "📦 Building halos package..."
-  generate-local-changelog "halos" "halos"
   debtools bash -c "cd halos && dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./ 2>/dev/null || true"
   echo "✅ halos package built"
   ls -lh halos/*.deb 2>/dev/null || true
@@ -58,7 +40,6 @@ function build-halos-marine {
   #@ Build halos-marine metapackage
   #@ Category: Build
   echo "📦 Building halos-marine package..."
-  generate-local-changelog "halos-marine" "halos-marine"
   debtools bash -c "cd halos-marine && dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./ 2>/dev/null || true"
   echo "✅ halos-marine package built"
   ls -lh halos-marine/*.deb 2>/dev/null || true
@@ -158,7 +139,6 @@ function clean {
   echo "🧹 Cleaning build artifacts..."
   rm -f halos/*.deb halos/*.buildinfo halos/*.changes 2>/dev/null || true
   rm -f halos-marine/*.deb halos-marine/*.buildinfo halos-marine/*.changes 2>/dev/null || true
-  rm -f halos/debian/changelog halos-marine/debian/changelog 2>/dev/null || true
   echo "✅ Cleanup complete"
 }
 
