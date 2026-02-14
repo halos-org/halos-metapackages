@@ -52,4 +52,4 @@ See `cockpit-apt` repository for the detailed versioning workflow.
 
 ## Repository
 
-Part of the [HaLOS](https://github.com/hatlabs/halos-distro) distribution.
+Part of the [HaLOS](https://github.com/halos-org/halos-distro) distribution.

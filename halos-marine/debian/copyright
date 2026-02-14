@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: halos-marine
-Source: https://github.com/hatlabs/halos-metapackages
+Source: https://github.com/halos-org/halos-metapackages
 
 Files: *
 Copyright: 2025 Hat Labs Ltd <info@hatlabs.fi>
