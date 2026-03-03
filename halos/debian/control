@@ -22,8 +22,9 @@ Depends: ${misc:Depends},
          docker-compose | docker-compose-plugin,
          docker-cli,
          halos-core-containers,
-         homarr-container-adapter,
-         halos-mdns-publisher
+         homarr-container-adapter
+Conflicts: halos-mdns-publisher
+Replaces: halos-mdns-publisher
 Description: Base system metapackage for HaLOS
  This metapackage installs the base HaLOS system, providing web-based
  Raspberry Pi management through Cockpit.
