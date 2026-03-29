@@ -38,7 +38,7 @@ if [ -z "$VERSION" ] || [ -z "$DISTRO" ] || [ -z "$COMPONENT" ]; then
 fi
 
 # Packages to rename
-PACKAGES=("halos" "halos-marine")
+PACKAGES=("halos" "halos-marine" "halos-halpi2" "halos-halpi2-marine" "halos-desktop" "halos-headless" "halos-desktop-marine" "halos-headless-marine")
 
 for PKG in "${PACKAGES[@]}"; do
     OLD_NAME="${PKG}_${VERSION}_all.deb"

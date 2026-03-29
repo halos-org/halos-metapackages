@@ -35,9 +35,7 @@ case "$RELEASE_TYPE" in
 
 > **This is a pre-release build from the main branch. Use for testing only.**
 
-**Packages:**
-- \`halos\` - Base HaLOS system metapackage
-- \`halos-marine\` - Marine variant metapackage
+**Packages:** \`halos\`, \`halos-marine\`, \`halos-halpi2\`, \`halos-halpi2-marine\`, \`halos-desktop\`, \`halos-headless\`, \`halos-desktop-marine\`, \`halos-headless-marine\`
 
 **Build Information:**
 - Commit: ${SHORT_SHA} (\`${GITHUB_SHA}\`)
@@ -46,74 +44,20 @@ case "$RELEASE_TYPE" in
 ### Recent Changes
 
 ${CHANGELOG}
-
-### Installation
-
-\`\`\`bash
-# Add Hat Labs repository (if not already added)
-curl -fsSL https://apt.hatlabs.fi/hat-labs-apt-key.asc | sudo gpg --dearmor -o /usr/share/keyrings/hatlabs-apt-key.gpg
-
-# Add unstable channel
-echo "deb [signed-by=/usr/share/keyrings/hatlabs-apt-key.gpg] https://apt.hatlabs.fi unstable main" | sudo tee /etc/apt/sources.list.d/hatlabs-unstable.list
-
-# Update and install
-sudo apt update
-sudo apt install halos        # Base system
-sudo apt install halos-marine # Marine variant
-\`\`\`
-
 EOF
     ;;
 
-  draft)
+  draft|stable)
     cat > release_notes.md <<EOF
 ## HaLOS Metapackages v${VERSION}
 
 Debian metapackages for the HaLOS (Hat Labs Operating System) distribution.
 
-**Packages:**
-- \`halos\` - Base HaLOS system (Cockpit + tools)
-- \`halos-marine\` - Marine variant (halos + marine packages)
+**Packages:** \`halos\`, \`halos-marine\`, \`halos-halpi2\`, \`halos-halpi2-marine\`, \`halos-desktop\`, \`halos-headless\`, \`halos-desktop-marine\`, \`halos-headless-marine\`
 
 ### Changes
 
 ${CHANGELOG}
-
-### Installation
-
-Available from [apt.hatlabs.fi](https://github.com/hatlabs/apt.hatlabs.fi):
-
-\`\`\`bash
-sudo apt update
-sudo apt install halos        # Base system
-sudo apt install halos-marine # Marine variant
-\`\`\`
-EOF
-    ;;
-
-  stable)
-    cat > release_notes.md <<EOF
-## HaLOS Metapackages v${VERSION}
-
-Debian metapackages for the HaLOS (Hat Labs Operating System) distribution.
-
-**Packages:**
-- \`halos\` - Base HaLOS system (Cockpit + tools)
-- \`halos-marine\` - Marine variant (halos + marine packages)
-
-### Changes
-
-${CHANGELOG}
-
-### Installation
-
-Available from [apt.hatlabs.fi](https://github.com/hatlabs/apt.hatlabs.fi):
-
-\`\`\`bash
-sudo apt update
-sudo apt install halos        # Base system
-sudo apt install halos-marine # Marine variant
-\`\`\`
 EOF
     ;;
 
