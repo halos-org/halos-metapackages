@@ -1,0 +1,16 @@
+Source: halos-desktop
+Section: metapackages
+Priority: optional
+Maintainer: Matti Airas <matti.airas@hatlabs.fi>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Homepage: https://github.com/halos-org/halos-metapackages
+Rules-Requires-Root: no
+
+Package: halos-desktop
+Architecture: all
+Depends: ${misc:Depends},
+         halos
+Description: HaLOS desktop variant metapackage
+ This metapackage marks a HaLOS installation as a desktop variant.
+ Future desktop-specific packages will be added as dependencies.

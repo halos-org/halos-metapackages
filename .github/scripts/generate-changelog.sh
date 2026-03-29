@@ -86,6 +86,9 @@ EOF
     echo ""
 }
 
-# Generate changelogs for both packages
-generate_changelog "halos" "halos"
-generate_changelog "halos-marine" "halos-marine"
+# Generate changelogs for all packages
+for pkg_dir in halos halos-marine halos-halpi2 halos-halpi2-marine halos-desktop halos-headless halos-desktop-marine halos-headless-marine; do
+    if [ -d "$pkg_dir/debian" ]; then
+        generate_changelog "$pkg_dir" "$pkg_dir"
+    fi
+done

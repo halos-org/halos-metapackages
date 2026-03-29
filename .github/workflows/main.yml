@@ -17,7 +17,7 @@ jobs:
     uses: halos-org/shared-workflows/.github/workflows/build-release.yml@main
     with:
       package-name: halos
-      package-description: 'HaLOS metapackages (halos, halos-marine)'
+      package-description: 'HaLOS metapackages'
       apt-distro: trixie
       apt-component: main
       skip-tests: true

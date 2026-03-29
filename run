@@ -27,53 +27,52 @@ function debtools {
 ################################################################################
 # Debian Package Building Commands
 
-function build-halos {
-  #@ Build halos metapackage
-  #@ Category: Build
-  echo "📦 Building halos package..."
-  debtools bash -c "cd halos && dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./ 2>/dev/null || true"
-  echo "✅ halos package built"
-  ls -lh halos/*.deb 2>/dev/null || true
-}
+ALL_PACKAGES="halos halos-marine halos-halpi2 halos-halpi2-marine halos-desktop halos-headless halos-desktop-marine halos-headless-marine"
 
-function build-halos-marine {
-  #@ Build halos-marine metapackage
+function build-pkg {
+  #@ Build a single metapackage by name
   #@ Category: Build
-  echo "📦 Building halos-marine package..."
-  debtools bash -c "cd halos-marine && dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./ 2>/dev/null || true"
-  echo "✅ halos-marine package built"
-  ls -lh halos-marine/*.deb 2>/dev/null || true
+  local pkg="${1:-}"
+  if [[ -z "$pkg" ]]; then
+    echo "Error: package name required"
+    echo "Usage: ./run build-pkg <package-name>"
+    exit 1
+  fi
+  echo "Building $pkg..."
+  debtools bash -c "cd $pkg && dpkg-buildpackage -b -uc -us && mv ../*.deb ../*.buildinfo ../*.changes ./ 2>/dev/null || true"
+  echo "$pkg built"
+  ls -lh "$pkg"/*.deb 2>/dev/null || true
 }
 
 function build-all {
-  #@ Build both metapackages
+  #@ Build all metapackages
   #@ Category: Build
-  build-halos
-  build-halos-marine
+  for pkg in $ALL_PACKAGES; do
+    build-pkg "$pkg"
+  done
   echo ""
-  echo "📦 All packages built:"
-  ls -lh halos/*.deb halos-marine/*.deb 2>/dev/null || true
+  echo "All packages built:"
+  for pkg in $ALL_PACKAGES; do
+    ls -lh "$pkg"/*.deb 2>/dev/null || true
+  done
 }
 
 function lint {
   #@ Check packages with lintian (same flags as CI)
   #@ Category: Quality
   local failed=0
-  echo "🔍 Running lintian on halos..."
-  if ! debtools lintian --info --display-info --fail-on error,warning halos/*.deb; then
-    failed=1
-  fi
-  echo ""
-  echo "🔍 Running lintian on halos-marine..."
-  if ! debtools lintian --info --display-info --fail-on error,warning halos-marine/*.deb; then
-    failed=1
-  fi
-  echo ""
+  for pkg in $ALL_PACKAGES; do
+    echo "Running lintian on $pkg..."
+    if ! debtools lintian --info --display-info --fail-on error,warning "$pkg"/*.deb; then
+      failed=1
+    fi
+    echo ""
+  done
   if [ $failed -eq 1 ]; then
-    echo "❌ Lintian found issues. See above for details."
+    echo "Lintian found issues. See above for details."
     return 1
   fi
-  echo "✅ Lintian checks passed"
+  echo "Lintian checks passed"
 }
 
 ################################################################################
@@ -136,10 +135,11 @@ function bumpversion {
 function clean {
   #@ Clean build artifacts
   #@ Category: Utility
-  echo "🧹 Cleaning build artifacts..."
-  rm -f halos/*.deb halos/*.buildinfo halos/*.changes 2>/dev/null || true
-  rm -f halos-marine/*.deb halos-marine/*.buildinfo halos-marine/*.changes 2>/dev/null || true
-  echo "✅ Cleanup complete"
+  echo "Cleaning build artifacts..."
+  for pkg in $ALL_PACKAGES; do
+    rm -f "$pkg"/*.deb "$pkg"/*.buildinfo "$pkg"/*.changes 2>/dev/null || true
+  done
+  echo "Cleanup complete"
 }
 
 ################################################################################
