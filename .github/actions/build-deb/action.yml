@@ -1,5 +1,5 @@
 name: 'Build Debian Packages'
-description: 'Build both halos and halos-marine metapackages'
+description: 'Build all HaLOS metapackages'
 runs:
   using: 'composite'
   steps:
@@ -9,24 +9,22 @@ runs:
         sudo apt-get update
         sudo apt-get install -y dpkg-dev debhelper build-essential
 
-    - name: Build halos package
+    - name: Build all metapackages
       shell: bash
       run: |
-        cd halos
-        dpkg-buildpackage -b -uc -us
-        mv ../*.deb ../halos/ 2>/dev/null || true
-
-    - name: Build halos-marine package
-      shell: bash
-      run: |
-        cd halos-marine
-        dpkg-buildpackage -b -uc -us
-        mv ../*.deb ../halos-marine/ 2>/dev/null || true
+        for pkg in halos halos-marine halos-halpi2 halos-halpi2-marine halos-desktop halos-headless halos-desktop-marine halos-headless-marine; do
+          echo "Building $pkg..."
+          cd "$pkg"
+          dpkg-buildpackage -b -uc -us
+          mv ../*.deb ../"$pkg"/ 2>/dev/null || true
+          cd ..
+        done
 
     - name: Move packages to root
       shell: bash
       run: |
-        mv halos/*.deb ./ 2>/dev/null || true
-        mv halos-marine/*.deb ./ 2>/dev/null || true
+        for pkg in halos halos-marine halos-halpi2 halos-halpi2-marine halos-desktop halos-headless halos-desktop-marine halos-headless-marine; do
+          mv "$pkg"/*.deb ./ 2>/dev/null || true
+        done
         echo "Built packages:"
         ls -lh *.deb

@@ -1,0 +1,17 @@
+Source: halos-desktop-marine
+Section: metapackages
+Priority: optional
+Maintainer: Matti Airas <matti.airas@hatlabs.fi>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Homepage: https://github.com/halos-org/halos-metapackages
+Rules-Requires-Root: no
+
+Package: halos-desktop-marine
+Architecture: all
+Depends: ${misc:Depends},
+         halos-desktop,
+         halos-marine
+Description: HaLOS desktop marine system metapackage
+ This metapackage marks a HaLOS installation as a desktop marine variant.
+ Future desktop-specific marine packages will be added as dependencies.

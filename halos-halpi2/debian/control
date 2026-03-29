@@ -1,0 +1,21 @@
+Source: halos-halpi2
+Section: metapackages
+Priority: optional
+Maintainer: Matti Airas <matti.airas@hatlabs.fi>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Homepage: https://github.com/halos-org/halos-metapackages
+Rules-Requires-Root: no
+
+Package: halos-halpi2
+Architecture: all
+Depends: ${misc:Depends},
+         halos,
+         halpid,
+         halpi2-firmware,
+         i2c-tools,
+         can-utils
+Description: HaLOS HALPI2 hardware support metapackage
+ This metapackage extends the base HaLOS system with HALPI2 hardware
+ support including power management daemon, firmware, I2C tools, and
+ CAN bus utilities.

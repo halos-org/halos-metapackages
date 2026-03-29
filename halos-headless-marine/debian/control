@@ -1,0 +1,17 @@
+Source: halos-headless-marine
+Section: metapackages
+Priority: optional
+Maintainer: Matti Airas <matti.airas@hatlabs.fi>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Homepage: https://github.com/halos-org/halos-metapackages
+Rules-Requires-Root: no
+
+Package: halos-headless-marine
+Architecture: all
+Depends: ${misc:Depends},
+         halos-headless,
+         halos-marine
+Description: HaLOS headless marine system metapackage
+ This metapackage marks a HaLOS installation as a headless marine variant.
+ Future headless-specific marine packages will be added as dependencies.

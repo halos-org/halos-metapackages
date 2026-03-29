@@ -1,0 +1,20 @@
+Source: halos-halpi2-marine
+Section: metapackages
+Priority: optional
+Maintainer: Matti Airas <matti.airas@hatlabs.fi>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.6.2
+Homepage: https://github.com/halos-org/halos-metapackages
+Rules-Requires-Root: no
+
+Package: halos-halpi2-marine
+Architecture: all
+Depends: ${misc:Depends},
+         halos-halpi2,
+         halos-marine,
+         halos-ublox-config,
+         signalk-halpi
+Description: HaLOS HALPI2 marine system metapackage
+ This metapackage extends HaLOS with HALPI2-specific marine support
+ including u-blox GNSS auto-configuration and Signal K hardware
+ monitoring via the HALPI2 daemon.
